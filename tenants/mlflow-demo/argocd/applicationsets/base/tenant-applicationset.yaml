@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-operators-applicationset
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  generators:
+    - list:
+        elements:
+        - cluster: local
+          url: https://kubernetes.default.svc
+          values:
+            name: mlflow-demo-namespaces
+            path: tenants/mlflow-demo/components/namespaces/overlays/default/
+        - cluster: local
+          url: https://kubernetes.default.svc
+          values:
+            name: mlflow-demo-rbac
+            path: tenants/mlflow-demo/components/rbac/overlays/default/
+        - cluster: local
+          url: https://kubernetes.default.svc
+          values:
+            name: mlflow-demo-argocd
+            path: tenants/mlflow-demo/components/argocd/overlays/default/
+  template:
+    metadata:
+      name: '{{values.name}}'
+      annotations:
+        argocd.argoproj.io/compare-options: IgnoreExtraneous
+        argocd.argoproj.io/sync-options: Prune=false
+    spec:
+      project: cluster-config
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: true
+        retry:
+          limit: 2
+          backoff:
+            duration: 5s
+            factor: 2
+            maxDuration: 3m
+      source:
+        repoURL: https://github.com/strangiato/mlflow-demo-cluster-config.git
+        targetRevision: main
+        path: '{{values.path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: openshift-gitops
