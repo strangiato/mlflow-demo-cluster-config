@@ -1,6 +1,6 @@
 apiVersion: user.openshift.io/v1
 kind: Group
 metadata:
-  name: mlops-demo-admins
+  name: mlflow-demo-admins
 users:
 - opentlc-mgr
