@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: openshift-gitops
 
 resources:
-  - cluster-operators-applicationset.yaml
+  - tenant-applicationset.yaml
