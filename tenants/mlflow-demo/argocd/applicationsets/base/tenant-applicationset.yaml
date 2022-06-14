@@ -31,7 +31,7 @@ spec:
         argocd.argoproj.io/compare-options: IgnoreExtraneous
         argocd.argoproj.io/sync-options: Prune=false
     spec:
-      project: cluster-config
+      project: mlflow-demo-tenant
       syncPolicy:
         automated:
           prune: false
