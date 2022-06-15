@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+ARGO_NS="openshift-gitops"
+
 echo "Validating cluster login"
 oc whoami
 
