@@ -6,9 +6,9 @@ namespace: mlflow-demo-gitops
 bases:
   - ../../../../defaults/openshift-gitops/instance/overlays/default
 
-patches:
-  - path: patch-rbac.yaml
-    target:
-      group: argoproj.io
-      version: v1alpha1
-      kind: ArgoCD
+# patches:
+#   - path: patch-rbac.yaml
+#     target:
+#       group: argoproj.io
+#       version: v1alpha1
+#       kind: ArgoCD
